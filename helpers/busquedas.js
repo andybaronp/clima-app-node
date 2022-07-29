@@ -13,7 +13,7 @@ export class Bsuquedas {
     get paramsMaptiler() {
         return {
 
-            'key': 'fzHjYb2p1bTZzey9h06D',
+            'key': process.env.MAPTILER_KEY,
             'language': 'es'
         }
     }

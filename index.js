@@ -1,6 +1,6 @@
 import { Bsuquedas } from "./helpers/busquedas.js";
 import { inquirerMenu, pauseInquirer, readInput } from "./helpers/inquirer.js"
-
+import 'dotenv/config'
 
 const main = async () => {
 
