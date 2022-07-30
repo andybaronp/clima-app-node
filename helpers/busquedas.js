@@ -17,6 +17,14 @@ export class Bsuquedas {
             'language': 'es'
         }
     }
+    get paramsOpenweathermap() {
+        return {
+
+            'appid': process.env.OPENWEATHER_KEY,
+            'lang': 'es',
+            'units': 'metric'
+        }
+    }
 
     async ciudad(lugar) {
 
@@ -29,12 +37,39 @@ export class Bsuquedas {
 
             //peticion Http
             const resp = await intanceAxios.get()
-            console.log(resp.data)
-            return []
+            const data = resp.data.features.map(({ id, center, place_name }) => {
+                return {
+                    id, center, place_name
+
+                }
+            })
+
+            return data
 
 
         } catch (error) {
             return []
         }
     }
+
+
+    async climaCiudad(lat = '', lon = '') {
+        const intanceAxios = axios.create({
+            baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`,
+            params: this.paramsOpenweathermap
+        })
+        const resp = await intanceAxios.get()
+        const { weather, main } = resp.data
+        const info = weather.map(info => {
+            return {
+                description: info.description,
+                min: main.temp_min,
+                max: main.temp_max
+
+            }
+        })
+        return info[0]
+
+    }
+
 }

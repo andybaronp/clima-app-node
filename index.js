@@ -1,13 +1,15 @@
 import { Bsuquedas } from "./helpers/busquedas.js";
-import { inquirerMenu, pauseInquirer, readInput } from "./helpers/inquirer.js"
+import { inquirerMenu, listCountry, pauseInquirer, readInput } from "./helpers/inquirer.js"
 import 'dotenv/config'
 
 const main = async () => {
-
+    console.clear()
     let opt;
     const busqueda = new Bsuquedas()
 
     do {
+        console.clear()
+
         opt = await inquirerMenu()
 
         switch (opt) {
@@ -15,19 +17,23 @@ const main = async () => {
                 //Mostrar mensaje
                 const lugar = await readInput('Ingrese un lugar')
                 //Buscar lugar
-                const ciudad = await busqueda.ciudad(lugar)
+                const citys = await busqueda.ciudad(lugar)
                 //Seleccionar lugar
+                const { place_name, center } = await listCountry(citys)
+
+
 
                 //Clima
+                const { description, max, min } = await busqueda.climaCiudad(center[0], center[1])
 
                 //Mostrar resultados
                 console.log('\n Informacion de la ciudad\n'.green)
-                console.log('Ciudad: ')
-                console.log('Lat: ')
-                console.log('Lng: ')
-                console.log('Temperatura: ')
-                console.log('Min: ')
-                console.log('Max: ')
+                console.log(`Ciudad: ${place_name}`)
+                console.log(`Lat:  ${center[0]} `)
+                console.log(`Lng:  ${center[0]} `)
+                console.log(`Temperatura: ${description}`)
+                console.log(`Min: ${min}`)
+                console.log(`Max: ${max}`)
 
                 break;
 

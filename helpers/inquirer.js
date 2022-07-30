@@ -69,14 +69,15 @@ export const readInput = async (message) => {
 }
 
 
-export const listTaskDelete = async (tasks = []) => {
+export const listCountry = async (country = []) => {
 
 
-    const choices = tasks.map((task, index) => {
+    const choices = country.map((city, index) => {
         const idx = `${index + 1}.`.green
         return {
-            value: task.id,
-            name: `${idx} ${task.desc} `
+            value: city,
+
+            name: `${idx} ${city.place_name} `
         }
     })
 
@@ -84,32 +85,19 @@ export const listTaskDelete = async (tasks = []) => {
         value: 0,
         name: '0.'.green + ' Cancelar'
     })
+
     const question = [
         {
             type: 'list',
-            name: 'id',
-            message: 'Borrar',
+            name: 'data',
+            message: 'Seleccione',
             choices
         }
     ]
-    const { id } = await inquirer.prompt(question)
-    return id
+    const city = await inquirer.prompt(question)
+
+    return city.data
 }
-
-
-export const confirmAction = async (message = '') => {
-    const question = [
-        {
-            type: 'confirm',
-            name: 'ok',
-            message,
-
-        }
-    ]
-    const { ok } = await inquirer.prompt(question)
-    return ok
-}
-
 
 
 export const showTaskCheckList = async (tasks = []) => {
