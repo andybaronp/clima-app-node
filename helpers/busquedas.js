@@ -26,7 +26,7 @@ export class Bsuquedas {
         }
     }
 
-    async ciudad(lugar) {
+    async city(lugar) {
 
         try {
 
@@ -37,14 +37,17 @@ export class Bsuquedas {
 
             //peticion Http
             const resp = await intanceAxios.get()
-            const data = resp.data.features.map(({ id, center, place_name }) => {
-                return {
-                    id, center, place_name
+            return resp.data.features.map((inf) => ({
 
-                }
-            })
+                id: inf.id,
+                nombre: inf.place_name,
+                lng: inf.center[0],
+                lat: inf.center[1]
 
-            return data
+
+            }))
+
+
 
 
         } catch (error) {
@@ -63,6 +66,7 @@ export class Bsuquedas {
         const info = weather.map(info => {
             return {
                 description: info.description,
+                temp: main.temp,
                 min: main.temp_min,
                 max: main.temp_max
 

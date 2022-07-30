@@ -75,9 +75,8 @@ export const listCountry = async (country = []) => {
     const choices = country.map((city, index) => {
         const idx = `${index + 1}.`.green
         return {
-            value: city,
-
-            name: `${idx} ${city.place_name} `
+            value: city.id,
+            name: `${idx} ${city.nombre} `
         }
     })
 
@@ -89,14 +88,13 @@ export const listCountry = async (country = []) => {
     const question = [
         {
             type: 'list',
-            name: 'data',
-            message: 'Seleccione',
+            name: 'id',
+            message: 'Seleccione: ',
             choices
         }
     ]
-    const city = await inquirer.prompt(question)
-
-    return city.data
+    const { id } = await inquirer.prompt(question)
+    return id
 }
 
 
