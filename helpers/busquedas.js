@@ -63,16 +63,15 @@ export class Bsuquedas {
         })
         const resp = await intanceAxios.get()
         const { weather, main } = resp.data
-        const info = weather.map(info => {
-            return {
-                description: info.description,
-                temp: main.temp,
-                min: main.temp_min,
-                max: main.temp_max
 
-            }
-        })
-        return info[0]
+        return {
+            description: weather[0].description,
+            temp: main.temp,
+            min: main.temp_min,
+            max: main.temp_max
+
+        }
+
 
     }
 
