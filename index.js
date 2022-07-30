@@ -1,3 +1,5 @@
+import('colors')
+
 import { Bsuquedas } from "./helpers/busquedas.js";
 import { inquirerMenu, listCountry, pauseInquirer, readInput } from "./helpers/inquirer.js"
 import 'dotenv/config'
@@ -8,7 +10,6 @@ const main = async () => {
     const busqueda = new Bsuquedas()
 
     do {
-        console.clear()
 
         opt = await inquirerMenu()
 
@@ -26,14 +27,16 @@ const main = async () => {
                 const { description, max, min, temp } = await busqueda.climaCiudad(lat, lng)
 
                 //Mostrar resultados
+                console.clear()
+
                 console.log('\n Informacion de la ciudad\n'.green)
-                console.log(`Ciudad: ${nombre}`)
+                console.log(`Ciudad: ${nombre.green}`)
                 console.log(`Lng:  ${lng} `)
                 console.log(`Lat:  ${lat} `)
                 console.log(`Temperatura: ${temp}`)
                 console.log(`Min: ${min}`)
                 console.log(`Max: ${max}`)
-                console.log(`El clima en este momento: ${description}`)
+                console.log(`El clima en este momento: ${description.green}`)
 
                 break;
 
