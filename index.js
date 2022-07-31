@@ -19,10 +19,13 @@ const main = async () => {
                 const termino = await readInput('Ingrese un lugar')
                 //Buscar lugar
                 const data = await busqueda.city(termino)
+
                 //Seleccionar lugar
                 const id = await listCountry(data)
-                console.log(id)
+                if (id === 0) continue
                 const { nombre, lng, lat } = data.find(l => l.id == id)
+                //Guardar en Historial
+                busqueda.addHistory(nombre)
                 //Clima
                 const { description, max, min, temp } = await busqueda.climaCiudad(lat, lng)
 
@@ -39,9 +42,17 @@ const main = async () => {
                 console.log(`El clima en este momento: ${description.green}`)
 
                 break;
+            case 2:
+                //Historial
 
-            default:
+
+                busqueda.historialCapitalize.forEach((lugar, id) => {
+                    const idx = ` ${id + 1}.`.green
+                    console.log(`${idx} ${lugar}`)
+                })
                 break;
+
+
         }
         if (opt !== 0) await pauseInquirer()
 

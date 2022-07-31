@@ -98,27 +98,3 @@ export const listCountry = async (country = []) => {
 }
 
 
-export const showTaskCheckList = async (tasks = []) => {
-
-
-    const choices = tasks.map((task, index) => {
-        const idx = `${index + 1}.`.green
-        return {
-            value: task.id,
-            name: `${idx} ${task.desc} `,
-            checked: (task.completeIn) ? true : false
-        }
-    })
-
-
-    const question = [
-        {
-            type: 'checkbox',
-            name: 'ids',
-            message: 'Selecciones',
-            choices
-        }
-    ]
-    const { ids } = await inquirer.prompt(question)
-    return ids
-}

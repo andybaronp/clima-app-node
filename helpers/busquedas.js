@@ -1,12 +1,14 @@
+import fs from 'fs'
 import axios from "axios"
 
 export class Bsuquedas {
 
-    historial = ['Caracas', 'Medellin']
-
+    historial = []
+    pathHistory = './DB/historial.json'
     constructor() {
 
         //TODO ller de Db
+        this.readDB()
     }
 
     get paramsMaptiler() {
@@ -25,6 +27,15 @@ export class Bsuquedas {
         }
     }
 
+    get historialCapitalize() {
+
+
+        return this.historial.map(lugar => {
+            let palabras = lugar.split(' ')
+            palabras = palabras.map(p => p[0].toLocaleUpperCase() + p.substring(1))
+            return palabras.join(' ')
+        })
+    }
     async city(lugar) {
 
         try {
@@ -74,4 +85,34 @@ export class Bsuquedas {
 
     }
 
+    addHistory(lugar = '') {
+
+        if (!this.historial.includes(lugar.toLocaleUpperCase())) {
+
+            this.historial.unshift(lugar.toLocaleLowerCase())
+        }
+        //Guardar en DB
+        this.saveDB()
+    }
+    saveDB() {
+        const payload = {
+            historial: this.historial
+        }
+        fs.writeFileSync(this.pathHistory, JSON.stringify(payload))
+    }
+
+    readDB() {
+
+        if (!fs.existsSync(this.pathHistory)) return
+        const info = fs.readFileSync(this.pathHistory, { encoding: 'utf8' })
+
+        const data = JSON.parse(info)
+        this.historial = data.historial
+
+
+
+
+
+    }
 }
+
