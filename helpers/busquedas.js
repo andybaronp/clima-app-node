@@ -89,6 +89,7 @@ export class Bsuquedas {
 
         if (!this.historial.includes(lugar.toLocaleUpperCase())) {
 
+            this.historial = this.historial.slice(0, 4)
             this.historial.unshift(lugar.toLocaleLowerCase())
         }
         //Guardar en DB
